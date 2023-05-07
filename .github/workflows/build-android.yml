@@ -18,6 +18,8 @@ jobs:
         python-version: '3.9'
     - name: Show myself
       run: uname -a
+    - name: Current Dir
+      run: pwd
     - name: Prepare NDK package
       run: wget https://dl.google.com/android/repository/android-ndk-r21e-linux-x86_64.zip
     - name: Unzip NDK package
