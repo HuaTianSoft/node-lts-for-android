@@ -31,4 +31,4 @@ jobs:
     - name: Grant permissions
       run: chmod +x android-configure && chmod +x configure
     - name: Build with Android NDK
-      run: ./android-configure ndk arm64 23 && make -j8
+      run: ./android-configure /home/runner/work/node/node/ndk arm64 21 && make -j8
