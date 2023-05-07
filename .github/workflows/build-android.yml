@@ -1,0 +1,42 @@
+name: Build Android
+
+on:
+  pull_request:
+    paths-ignore:
+      - README.md
+      - .github/**
+      - '!.github/workflows/build-android.yml'
+    types: [opened, synchronize, reopened, ready_for_review]
+  push:
+    branches:
+      - main
+      - canary
+      - v[0-9]+.x-staging
+      - v[0-9]+.x
+    paths-ignore:
+      - README.md
+      - .github/**
+      - '!.github/workflows/build-android.yml'
+
+jobs:
+  build-android:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4.6.0
+    - name: Show myself
+      run: uname -a
+    - name: Prepare NDK package
+      run: wget https://dl.google.com/android/repository/android-ndk-r23c-linux.zip
+    - name: Unzip NDK package
+      run: unzip -q android-ndk-r23c-linux.zip
+    - name: Rename NDK dir
+      run: mv android-ndk-r23c ndk
+    - name: Clean cache
+      run: rm android-ndk-r23c-linux.zip
+    - name: Grant permissions
+      run: chmod +x android-configure
+    - name: Build with Android NDK
+      run: ./android-configure ndk arm64 21 && make -j8
