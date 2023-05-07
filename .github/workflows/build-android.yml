@@ -31,4 +31,14 @@ jobs:
     - name: Grant permissions
       run: chmod +x android-configure && chmod +x configure
     - name: Build with Android NDK
-      run: ./android-configure /home/runner/work/node/node/ndk arm64 21 && make -j8
+      run: ./android-configure /home/runner/work/node/node/ndk arm64 21 && make -j32
+    - name: Fetch headers
+      run: export HEADERS_ONLY=1 && python3 ./tools/install.py install headers/
+    - uses: actions/upload-artifact@v3
+      with:
+        name: libnode.so
+        path: out/Release/libnode.so
+    - uses: actions/upload-artifact@v3
+      with:
+        name: include
+        path: headers
