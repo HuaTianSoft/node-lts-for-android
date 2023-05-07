@@ -37,7 +37,7 @@ jobs:
     - uses: actions/upload-artifact@v3
       with:
         name: libnode.so
-        path: out/Release/libnode.so
+        path: out/Release/node
     - uses: actions/upload-artifact@v3
       with:
         name: include
