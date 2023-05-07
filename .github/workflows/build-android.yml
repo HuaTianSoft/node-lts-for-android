@@ -19,13 +19,13 @@ jobs:
     - name: Show myself
       run: uname -a
     - name: Prepare NDK package
-      run: wget https://dl.google.com/android/repository/android-ndk-r21e-linux.zip
+      run: wget https://dl.google.com/android/repository/android-ndk-r21e-linux-x86_64.zip
     - name: Unzip NDK package
-      run: unzip -q android-ndk-r21e-linux.zip
+      run: unzip -q android-ndk-r21e-linux-x86_64.zip
     - name: Rename NDK dir
       run: mv android-ndk-r21e ndk
     - name: Clean cache
-      run: rm android-ndk-r21e-linux.zip
+      run: rm android-ndk-r21e-linux-x86_64.zip
     - name: Grant permissions
       run: chmod +x android-configure && chmod +x configure
     - name: Build with Android NDK
