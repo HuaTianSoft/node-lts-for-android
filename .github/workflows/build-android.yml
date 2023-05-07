@@ -1,22 +1,10 @@
 name: Build Android
 
 on:
-  pull_request:
-    paths-ignore:
-      - README.md
-      - .github/**
-      - '!.github/workflows/build-android.yml'
-    types: [opened, synchronize, reopened, ready_for_review]
   push:
-    branches:
-      - main
-      - canary
-      - v[0-9]+.x-staging
-      - v[0-9]+.x
-    paths-ignore:
-      - README.md
-      - .github/**
-      - '!.github/workflows/build-android.yml'
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
 
 jobs:
   build-android:
