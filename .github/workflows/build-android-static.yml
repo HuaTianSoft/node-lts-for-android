@@ -1,0 +1,41 @@
+name: Build Android
+
+on:
+  workflow_dispatch
+
+jobs:
+  build-android:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4.6.0
+      with:
+        python-version: '3.9'
+    - name: Show myself
+      run: uname -a
+    - name: Current Dir
+      run: pwd
+    - name: Prepare NDK package
+      run: wget https://dl.google.com/android/repository/android-ndk-r21e-linux-x86_64.zip
+    - name: Unzip NDK package
+      run: unzip -q android-ndk-r21e-linux-x86_64.zip
+    - name: Rename NDK dir
+      run: mv android-ndk-r21e ndk
+    - name: Clean cache
+      run: rm android-ndk-r21e-linux-x86_64.zip
+    - name: Grant permissions
+      run: chmod +x android-configure-static && chmod +x configure
+    - name: Build with Android NDK
+      run: ./android-configure-static /home/runner/work/node-lts-for-android/node-lts-for-android/ndk arm64 21 && make
+    - name: Fetch headers
+      run: export HEADERS_ONLY=1 && python3 ./tools/install.py install headers/
+    - uses: actions/upload-artifact@v3
+      with:
+        name: libnode.so
+        path: out/Release/node
+    - uses: actions/upload-artifact@v3
+      with:
+        name: include
+        path: headers
